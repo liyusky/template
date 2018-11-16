@@ -1,6 +1,7 @@
 const fs = require('fs')
 const path = require('path')
-const file = require('../components/file.js')
+const file = require('../stuff/file.js')
+const material = require('../stuff/material.js')
 
 function setClassConfig () {
   let files = fs.readdirSync('../class', 'utf8')
@@ -15,19 +16,16 @@ function setClassConfig () {
 }
 
 function initConfig () {
+  let {components, classes} = material
   let [componentsStr, classesStr] = ['', '']
-  if (components.length) {
-    components.forEach(item => {
-      config.components[item] = false
-      componentsStr += `\n\t\t'${item}': false,`
-    })
-  }
-  if (classes.length) {
-    classes.forEach(item => {
-      config.class[firstChatUp(item.split('.')[0])] = false
-      classesStr += `\n\t\t'${firstChatUp(item.split('.')[0])}': false,`
-    });
-  }
+  components.forEach(item => {
+    config.components[item] = false
+    componentsStr += `\n\t\t'${item}': false,`
+  })
+  classes.forEach(item => {
+    config.class[firstChatUp(item.split('.')[0])] = false
+    classesStr += `\n\t\t'${firstChatUp(item.split('.')[0])}': false,`
+  })
   configTemplate = formatConfig(false, false, classesStr, componentsStr, false, configTemplate)
 }
 
